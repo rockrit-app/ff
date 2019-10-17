@@ -9,14 +9,65 @@
   </head>
 
   <body>
+    <header></header>
+    <section></section>
+
+    <script>
+      base = "http://fantasy.espn.com/apis/v3/games/ffl/seasons/"
+      year = "2019"
+      mid = "/segments/0/leagues/"
+      leagueID = "35627161"
+      tail = "?view=mDraftDetail&view=mLiveScoring&view=mMatchupScore&view=mPendingTransactions&view=mPositionalRatings&view=mSettings&view=mTeam&view=modular&view=mNav&view=mMatchupScore"
+      url = paste0(base,year,mid,leagueID,tail)
+      
+   
+    var requestURL = url;
+    var request = new XMLHttpRequest();
+    request.open('GET', requestURL);
+    request.responseType = 'json';
+    request.send();
+    request.onload = function() {
+      var Teams = request.response;
+      populateHeader(Teams);
+      showTeams(Teams);
+    }
+    function populateHeader(jsonObj) {
+      var myH1 = document.createElement('h1');
+      myH1.textContent = jsonObj['ESPNFromJSON$league$name'];
+      header.appendChild(myH1);
+    }
+    </script>
+    <!--
+      function showHeroes(jsonObj) {
+      var heroes = jsonObj['members'];
+      for(var i = 0; i < heroes.length; i++) {
+        var myArticle = document.createElement('article');
+        var myH2 = document.createElement('h2');
+        var myPara1 = document.createElement('p');
+        var myPara2 = document.createElement('p');
+        var myPara3 = document.createElement('p');
+        var myList = document.createElement('ul');
+        myH2.textContent = heroes[i].name;
+        myPara1.textContent = 'Secret identity: ' + heroes[i].secretIdentity;
+        myPara2.textContent = 'Age: ' + heroes[i].age;
+        myPara3.textContent = 'Superpowers:';
+        var superPowers = heroes[i].powers;
+        for(var j = 0; j < superPowers.length; j++) {
+          var listItem = document.createElement('li');
+          listItem.textContent = superPowers[j];
+          myList.appendChild(listItem);
+        }
+        myArticle.appendChild(myH2);
+        myArticle.appendChild(myPara1);
+        myArticle.appendChild(myPara2);
+        myArticle.appendChild(myPara3);
+        myArticle.appendChild(myList);
+        section.appendChild(myArticle);
+      }
+    }
+
     
-<script>
-base = "http://fantasy.espn.com/apis/v3/games/ffl/seasons/"
-year = "2019"
-mid = "/segments/0/leagues/"
-leagueID = "35627161"
-tail = "?view=mDraftDetail&view=mLiveScoring&view=mMatchupScore&view=mPendingTransactions&view=mPositionalRatings&view=mSettings&view=mTeam&view=modular&view=mNav&view=mMatchupScore"
-url = paste0(base,year,mid,leagueID,tail)
+
   
   library(tidyverse)
 
@@ -29,6 +80,6 @@ TeamRecords =
     wins = ESPNFromJSON$teams$record$overall$wins
   ) %>%
   unite(Team, c(location, nickname), sep = " ")
-   </script>
+   </script -->
   </body>
 </html>
